@@ -21,7 +21,7 @@ class TestBannerGenerator:
 
     def _initalizecustomer(self):
         random.seed(random.randrange(2,10))
-        with open('clickdata.csv', mode='w') as wfile:
+        with open('../resources/clickdata.csv', mode='w') as wfile:
             writer = csv.writer(wfile, delimiter=',')
 
             loclist = list(self._locations.keys())
