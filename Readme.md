@@ -1,7 +1,8 @@
 <b>Description</b>
 
-This is a simple Reinforcement learning technique which uses a set of tools given below to dynamically display images for a Banner Slot of an ecommerce website.
-The additional feature used is the framework can support multiple locations based on setup and dynamically improves click through rate for banners.
+I have used Reinforcement learning technique that uses a set of tools given in details below to dynamically display images for a Banner Slot of an ecommerce website.
+
+The additional feature added in the framework is to support multiple locations based on setup that influences dynamically to improve click through rate for banners.
 
 <b>Business Problem</b>
 
@@ -10,9 +11,12 @@ One of the biggest revenue generation stream in Digital commerce is banner based
 Refer to the emarketer study (https://www.emarketer.com/Article/US-Digital-Display-Ad-Spending-Surpass-Search-Ad-Spending-2016/1013442) and many more forrestor studies which suggest this is  going to be a multibagger market with over $40 Billion revenue by 2020 in US alone.
 
 
-The current model also supports referrer ID(ads or thirdparty) and customerID capture. This can help us in future to do targeted marketing based on users click through rates.
-
-Further the model also supports multitenancy by ensuring the platform, slotID for images are inherantly embedded in the design.
+<b>Features</b>
+1. Supports Multitenancy for multiple platforms
+2. Supports configuration based approach for banners identified by banner name
+3. Supports location based filtering 
+4. Supports timewindow so that only fresh trending banners are used.
+5. The current model also supports referrer ID(ads or thirdparty) and customerID capture. This can help us in future to do targeted marketing based on users click through rates.
 
 
 <b>Improvements & TODOs</b>
