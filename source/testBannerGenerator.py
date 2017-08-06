@@ -109,12 +109,10 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(100000,False)
+    #testbanner.generateSampleData(100000,False)
 
-    '''
-    for recs in range(1,1000):
+    for recs in range(1,3000):
         print("started at {}".format(datetime.datetime.now()))
         testbanner.generateSampleData(20,True)
         print("Slept at {}".format(datetime.datetime.now()))
         time.sleep(10)
-    '''
