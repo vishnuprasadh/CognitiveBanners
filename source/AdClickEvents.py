@@ -11,21 +11,58 @@ import json
 
 
 app = Flask(__name__)
-#api = Api(app)
-#parser = reqparse.RequestParser()
 
 @app.route('/adclick/',methods=['POST'])
 def postAds():
-    if Request.args:
-        arguments = Request.args
-        banner = BannerContext(arguments["slot"],
-                               arguments["location"],
-                               arguments["bannerid"],
-                               utils.currentimeInFormat(),
-                           arguments["customerid"],
-                           arguments["clicked"],
-                           arguments["referral"],
-                           arguments["platform"])
+    '''
+    Used for posting of ads.
+    key elements to pass are - location, clicked, bannerid,customerid
+    Other elements to pass for context are platform, slot, referral
+    :return: Json 200 response for any success. Also gets a Errorcode and description in case of issue
+    '''
+    json_data=""
+    try:
+        if request.args:
+            referral =""
+            platform="ajio"
+            slot="hero"
+            customerid =""
+            bannerid= ""
+            clicked = False
+            location=""
+
+            if request.args.get("referral"): referral = request.args.get("referral")
+            if request.args.get("slot"): slot =request.args.get("slot")
+            if request.args.get("location"): location = request.args.get("location")
+            if request.args.get("customerid"): customerid = request.args.get("customerid")
+            if request.args.get("clicked"): clicked = bool(request.args.get("clicked"))
+            if request.args.get("platform"): platform = request.args.get("platform")
+            if request.args.get("bannerid"): bannerid = request.args.get("bannerid")
+
+            banners = []
+
+            if not (bannerid == "" or clicked == "" or location == ""):
+                banner = BannerContext(slot,
+                                       location,
+                                       bannerid,
+                                       utils.currentimeInFormat(),
+                                       customerid,
+                                       clicked,
+                                       referral,
+                                       platform)
+                banners.append(banner)
+                bmodel = BannerModel()
+                result = bmodel.saveBanners(banners)
+                json_data = {"key": "200", "value": "Record updated successfully"}
+
+        if json_data == "":
+            json_data = {"key": "200", "value": "No Record to update"}
+    except Exception as ex:
+        print(ex)
+        json_data = {"key": "200", "value":"", "errorcode": "401", "errordesc":"{}".format(ex)}
+
+    return json.dumps(json_data)
+
 
 @app.route('/adclick/',methods=['GET'])
 @app.route('/adclick/<string:platform>',methods=['GET'])
@@ -33,6 +70,15 @@ def postAds():
 @app.route('/adclick/<string:platform>/<string:slot>/<string:location>',methods=['GET'])
 @app.route('/adclick/<string:platform>/<string:slot>/<string:location>/<string:pastmin>',methods=['GET'])
 def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
+    '''
+    Provided the platform, slot and location details the API returns the image/ad.
+    :param platform:
+    :param slot:
+    :param location:
+    :param pastmin:
+    :return: Returns a json structure with key and value. The value has the name of image.
+     In case of error the errorcode and description is returned.
+    '''
     bmodel  = BannerModel()
     images = bmodel.getSlotBanners(platform, slot, utils.currentimeInFormat())
     rowresult = bmodel.getBanners(platform,slot,pastmin)
