@@ -6,6 +6,9 @@ The additional feature used is the framework can support multiple locations base
 Business Problem
 One of the biggest revenue generation stream in Digital commerce is banner based ads and click-through conversion through effective banner strategy. It is important to learn as the customer interacts if a banner is efficient. To some extent A/B testing does but its all post facto. Instead, reinfocement learning can help when the CTR of banners is too low by dynamically finding out the most clicked banners and leverages the same for display. In this program, this has been done with an additional classification by location.
 
+Refer to the emarketer study (https://www.emarketer.com/Article/US-Digital-Display-Ad-Spending-Surpass-Search-Ad-Spending-2016/1013442) and many more forrestor studies which suggest this is  going to be a multibagger market with over $40 Billion revenue by 2020 in US alone.
+
+
 The current model also supports referrer ID(ads or thirdparty) and customerID capture. This can help us in future to do targeted marketing based on users click through rates.
 
 Further the model also supports multitenancy by ensuring the platform, slotID for images are inherantly embedded in the design.
