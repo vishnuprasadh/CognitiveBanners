@@ -42,14 +42,14 @@ def postAds():
             banners = []
 
             if not (bannerid == "" or clicked == "" or location == ""):
-                banner = BannerContext(slot,
-                                       location,
-                                       bannerid,
+                banner = BannerContext(slot.lower(),
+                                       location.lower(),
+                                       bannerid.lower(),
                                        utils.currentimeInFormat(),
                                        customerid,
                                        clicked,
-                                       referral,
-                                       platform)
+                                       referral.lower(),
+                                       platform.lower())
                 banners.append(banner)
                 bmodel = BannerModel()
                 result = bmodel.saveBanners(banners)
@@ -86,8 +86,8 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
     json_data = json.dumps({})
 
     #if location not in any of this, default to Mumbai.
-    if not (location in ["Mumbai","Bangalore","Pune"]):
-        location = "Mumbai"
+    if not (location.lower() in ["mumbai","bangalore","pune"]):
+        location = "mumbai"
 
     if rowresult:
         #Initialize Spark context

@@ -15,9 +15,9 @@ class TestBannerGenerator:
     Once we have actual data this coldstart strategy wont be needed.
     '''
     _imagekey=list()
-    _locations = {'Bangalore': 0.06,
-                    'Mumbai':0.1,
-                  'Pune':0.03
+    _locations = {'bangalore': 0.06,
+                    'mumbai':0.1,
+                  'pune':0.03
                   }
 
     _banners = list()
@@ -48,13 +48,13 @@ class TestBannerGenerator:
                                        random.choice(self._imagekey),
                                        utils.currentimeInFormat(),
                                        customer,np.random.rand() < self._locations[location])
-                if location == 'Mumbai':
+                if location == 'mumbai':
                     mumbai +=1
                     if not banner.getBannerClicked:
                         falsemum+=1
                     else:
                         truemum+=1
-                elif location == 'Bangalore':
+                elif location == 'bangalore':
                     bangalore+=1
                     if not banner.getBannerClicked:
                         falseblr += 1
@@ -73,6 +73,7 @@ class TestBannerGenerator:
                                  banner.getOperationTime])
 
             #Insert the records into cassandra
+            result=0
             if self._coldstart:
                 result = self._model.saveBanners(self._banners)
 
@@ -108,8 +109,12 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    for recs in range(1,10):
+    testbanner.generateSampleData(25000,False)
+
+    '''
+    for recs in range(1,1000):
         print("started at {}".format(datetime.datetime.now()))
         testbanner.generateSampleData(20,True)
         print("Slept at {}".format(datetime.datetime.now()))
         time.sleep(10)
+    '''
