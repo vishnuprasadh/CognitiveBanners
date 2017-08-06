@@ -16,7 +16,9 @@ Further the model also supports multitenancy by ensuring the platform, slotID fo
 
 
 <b>Improvements & TODOs</b>
+
 There is lot of improvements through weightage and clustering to be added here but this is a very base "no-frills" extensible framework.
+
 
 <b>Technology Used</b>
 
@@ -32,7 +34,6 @@ A reward of 1 points and a noreward of 0 points used for this betavariate analys
 3. Cassandra drivers
 A basic slotconfiguration with 10images has been considered for one slot.
 Also on click, banner clicked data is stored in backend schema.
-
 
 4. Pandas, Numpy,time,datetime
 Heavily used for dataframe activities.
@@ -51,7 +52,9 @@ It is not used for ML or any other purpose which we can easily leverage once we 
 For large scale clickstream, it is best to use this technology.
 The framework coding has started but not yet completed.
 
+
 <b>Installation</b>
+
 
 Before you can proceed, the following has to be installed for sure. Note that there is no installation package created as of now but the following steps shoudl get you up and started easily.
 
