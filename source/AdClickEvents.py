@@ -85,6 +85,10 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
 
     json_data = json.dumps({})
 
+    #if location not in any of this, default to Mumbai.
+    if not (location in ["Mumbai","Bangalore","Pune"]):
+        location = "Mumbai"
+
     if rowresult:
         #Initialize Spark context
         SparkConf.setMaster = "local[2]"
@@ -93,7 +97,7 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
         rows = rowresult.current_rows
         rdd = sc.parallelize(rows)
         #filter by location
-        keys = rdd.filter(lambda X: "Bangalore" in X[0])
+        keys = rdd.filter(lambda X: location in X[0])
         #collect the filtered values to list.
         values = keys.collect()
         #get a dataframe
