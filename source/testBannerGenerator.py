@@ -104,4 +104,4 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(50000,True)
+    testbanner.generateSampleData(1000,True)

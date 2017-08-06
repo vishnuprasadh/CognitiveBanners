@@ -30,3 +30,8 @@ create table slotconfiguration
 
  Insert into bannerclickstream (platform,operationdate,adreferrer,slotname,bannerid,createddate, customerid, location,clicked)
  values ('ajio',f6747f80-7ac7-11e7-a231-409152815c5c,'','hero','1',1502038496,'1','mumbai',True)
+
+
+Select * from bannerclickstream where platform = 'ajio' and slotname = 'hero' and operationdate > 39c35cd8-7ac9-11e7-8ea2-a43489e438f4
+
+Select count(*) from bannerclickstream where platform = 'ajio' and slotname = 'hero' and operationdate > 39c35cd8-7ac9-11e7-8ea2-a43489e438f4

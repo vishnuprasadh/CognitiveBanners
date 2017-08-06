@@ -58,6 +58,13 @@ class BannerModel:
             self._session = self.cluster.connect(keyspace=self._keyspace)
 
     def  saveBanners(self, bannercontexts,timezone="IST"):
+        '''
+        For given list of bannercontext objects the method iterates through and saves
+        the same in bannerclickstream backend schema
+        :param bannercontexts: the instance of @BannerContext
+        :param timezone: Default is IST
+        :return: Any positive output means successful else error.
+        '''
         result = -1
         try:
             self.__setsession()
@@ -92,17 +99,31 @@ class BannerModel:
             result = 1
         except Exception as ex:
             print(ex)
+            result =-1
         finally:
             return result
 
 
-    def getBanners(self,fromdate,todate):
+    def getBanners(self,platform='ajio',slot='hero', forpastMinutes=720,timezone="IST"):
+        '''
+        Returns all the clickstreams forpastMinutes for given platform and slot.
+        :param platform: Default used is ajio and is the platform to review
+        :param slot: Default is the hero slot
+        :param forpastMinutes: 15mins is default. You can increase this further but keep it low to avoid perf issues.
+        :param timezone: default is IST. If you are on GMT, do nothing.
+        :return: Rows of all the results matching the query from bannerclickstream schema in backend
+        '''
         self.__setsession()
-        rows = self._session.execute(query="Select * from bannerclickstream")
-        for  row in rows:
-            print(row)
 
-    df1 = DataFrame()
+        curtime = time.time() - forpastMinutes*60
+        if timezone =="IST":
+            curtime +=19800 # we need to add 530hrs for gmt
+
+        statement = "Select * from bannerclickstream where platform = %s and slotname =%s and operationdate > %s "
+        rows = self._session.execute(query=statement,
+                                     parameters=(platform, slot, uuid_from_time(curtime)))
+        return rows
+
 
     def setSlotBanners(self,df,timezone="IST"):
         '''
@@ -159,6 +180,7 @@ class BannerModel:
 
         except Exception as ex:
             print(ex)
+            results = -1
 
         return results
 

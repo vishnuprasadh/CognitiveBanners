@@ -82,10 +82,6 @@ class BannerSuggestClassification:
 
             print(self._totalrewards)
 
-    def returnAdForGivenTimeline(self,validasof-datetime.now(),windowtime=3600):
-        fromtime = time.time()
-
-
 
 
 
