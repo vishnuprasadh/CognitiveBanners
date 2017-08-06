@@ -20,7 +20,7 @@ There is lot of improvements through weightage and clustering to be added here b
 Technology Used
 
 1. Python 3, Flask/REST
-The core technology which will basically run the entire framework
+The core technology which will basically run the entire framework.
 The flask REST GET and POST methods are used for posting of clicked banner data and retrieved image data.
 
 2. skilearn and machine learning libraries
@@ -47,9 +47,46 @@ PySpark framework is used for usage of filters across cities and also for any fu
 It is not used for ML or any other purpose which we can easily leverage once we also adopt Kafka.
 
 7. Kafka - TBD
-
 For large scale clickstream, it is best to use this technology.
 The framework coding has started but not yet completed.
+
+Installation
+Before you can proceed, the following has to be installed for sure. Note that there is no installation package created as of now but the following steps shoudl get you up and started easily.
+
+1.Python 3.6 - https://www.python.org/downloads/release/python-360/
+Once done, ensure you have right $ENVPATH or $HOME set in your bashprofile(mac) and env in windows.
+Note: I prefer using https://www.continuum.io/downloads which is anaconda distribution which has been used for this program.
+
+2.Cassandra - Any community or datastax community edition would do. https://academy.datastax.com/downloads?destination=downloads or http://cassandra.apache.org/ 
+
+3. Spark - Minimal of 2.X edition from https://spark.apache.org/  is required. Install community for apache hadoop 2.7 prebuilt edition and proceed.
+
+4. Kafka - At the moment the entire implementation is not yet done but download and have the kafka from https://kafka.apache.org/ ready for future compatibility. This would in turn be using Kafka REST & AVRO binary serializer for all topic messaging.
+
+5. PIP Installs
+```
+pip install cassandra-driver
+pip install numpy
+pip install pandas
+pip install scikit-learn
+pip install json
+pip install pyspark
+pip install csv
+pip install kafka-python
+pip install flask
+pip install kafka
+pip install kafka_Rest
+pip install configparser
+```
+
+
+
+
+
+
+
+
+
 
 
 
