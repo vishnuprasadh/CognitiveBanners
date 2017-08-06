@@ -1,4 +1,4 @@
-Description
+<b>Description</b>
 
 This is a simple Reinforcement learning technique which uses a set of tools given below to dynamically display images for a Banner Slot of an ecommerce website.
 The additional feature used is the framework can support multiple locations based on setup and dynamically improves click through rate for banners.
