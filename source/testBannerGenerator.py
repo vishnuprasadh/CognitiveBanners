@@ -5,12 +5,15 @@ from source.bannermodel import BannerModel
 import source.utils as utils
 import datetime
 import csv
-
+import time
 import numpy as np
 
 
 class TestBannerGenerator:
-
+    '''
+    Generates the base data for the Banners by region. This in turn is used for Reinforcement learning algorith.
+    Once we have actual data this coldstart strategy wont be needed.
+    '''
     _imagekey=list()
     _locations = {'Bangalore': 0.06,
                     'Mumbai':0.1,
@@ -95,6 +98,7 @@ class TestBannerGenerator:
         '''
         self._coldstart = coldstart
         self._model = BannerModel()
+
         slots = self._model.getSlotBanners('ajio','hero',utils.currentimeInFormat())
         for slot in slots:
             self._imagekey.append(slot[4])
@@ -104,4 +108,8 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(1000,True)
+    for recs in range(1,10):
+        print("started at {}".format(datetime.datetime.now()))
+        testbanner.generateSampleData(20,True)
+        print("Slept at {}".format(datetime.datetime.now()))
+        time.sleep(10)
