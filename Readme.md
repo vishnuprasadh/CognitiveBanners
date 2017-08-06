@@ -67,15 +67,12 @@ Once done, ensure you have right $ENVPATH or $HOME set in your bashprofile(mac) 
 
 Note: I prefer using https://www.continuum.io/downloads which is anaconda distribution which has been used for this program.
 
-
 2.Cassandra - Any community or datastax community edition would do. https://academy.datastax.com/downloads?destination=downloads or http://cassandra.apache.org/ 
-
 
 3. Spark - Minimal of 2.X edition from https://spark.apache.org/  is required. Install community for apache hadoop 2.7 prebuilt edition and proceed.
 
 
 4. Kafka - At the moment the entire implementation is not yet done but download and have the kafka from https://kafka.apache.org/ ready for future compatibility. This would in turn be using Kafka REST & AVRO binary serializer for all topic messaging.
-
 
 5. PIP Installs
 
