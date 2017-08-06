@@ -51,7 +51,6 @@ class BannerSuggestClassification:
         '''Dummy variable issue'''
         #self.data = self.data[:, 1:]
 
-
     def classify(self):
         #We will iterate through each of the samples.
         for sample in range(0,self._samples):
@@ -81,6 +80,16 @@ class BannerSuggestClassification:
             self._totalrewards = self._totalrewards + self._reward
 
             print(self._totalrewards)
+
+        tsuccess=0
+        tfail = 0
+        for index in range(0,9):
+            tsuccess += self._numberofrewards_1[index]
+            tfail+=self._numberofrewards_0[index]
+
+        print("Total of {} records, {} success, {} fails.".format(self._samples,
+                                                                    tsuccess,
+                                                                      tfail))
 
 
 

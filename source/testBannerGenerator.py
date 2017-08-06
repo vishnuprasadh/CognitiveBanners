@@ -15,9 +15,9 @@ class TestBannerGenerator:
     Once we have actual data this coldstart strategy wont be needed.
     '''
     _imagekey=list()
-    _locations = {'bangalore': 0.06,
-                    'mumbai':0.1,
-                  'pune':0.03
+    _locations = {'bangalore': 0.03,
+                    'mumbai':0.06,
+                  'pune':0.1
                   }
 
     _banners = list()
@@ -109,7 +109,7 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(25000,False)
+    testbanner.generateSampleData(100000,False)
 
     '''
     for recs in range(1,1000):
