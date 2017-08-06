@@ -3,7 +3,8 @@
 This is a simple Reinforcement learning technique which uses a set of tools given below to dynamically display images for a Banner Slot of an ecommerce website.
 The additional feature used is the framework can support multiple locations based on setup and dynamically improves click through rate for banners.
 
-Business Problem
+<b>Business Problem</b>
+
 One of the biggest revenue generation stream in Digital commerce is banner based ads and click-through conversion through effective banner strategy. It is important to learn as the customer interacts if a banner is efficient. To some extent A/B testing does but its all post facto. Instead, reinfocement learning can help when the CTR of banners is too low by dynamically finding out the most clicked banners and leverages the same for display. In this program, this has been done with an additional classification by location.
 
 Refer to the emarketer study (https://www.emarketer.com/Article/US-Digital-Display-Ad-Spending-Surpass-Search-Ad-Spending-2016/1013442) and many more forrestor studies which suggest this is  going to be a multibagger market with over $40 Billion revenue by 2020 in US alone.
@@ -14,10 +15,10 @@ The current model also supports referrer ID(ads or thirdparty) and customerID ca
 Further the model also supports multitenancy by ensuring the platform, slotID for images are inherantly embedded in the design.
 
 
-Improvements
+<b>Improvements & TODOs</b>
 There is lot of improvements through weightage and clustering to be added here but this is a very base "no-frills" extensible framework.
 
-Technology Used
+<b>Technology Used</b>
 
 1. Python 3, Flask/REST
 The core technology which will basically run the entire framework.
@@ -50,7 +51,8 @@ It is not used for ML or any other purpose which we can easily leverage once we 
 For large scale clickstream, it is best to use this technology.
 The framework coding has started but not yet completed.
 
-Installation
+<b>Installation</b>
+
 Before you can proceed, the following has to be installed for sure. Note that there is no installation package created as of now but the following steps shoudl get you up and started easily.
 
 1.Python 3.6 - https://www.python.org/downloads/release/python-360/
