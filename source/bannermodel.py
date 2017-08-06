@@ -13,6 +13,8 @@ from cassandra.util import uuid_from_time
 from cassandra.util import datetime_from_uuid1
 
 from cassandra.cqltypes import UUID
+from cassandra.cqltypes import TimestampType
+from cassandra.cqltypes import BooleanType
 
 #batch statement execution supports
 from cassandra.query import BatchStatement
@@ -55,14 +57,43 @@ class BannerModel:
         if self._session =="":
             self._session = self.cluster.connect(keyspace=self._keyspace)
 
-    def  saveBanners(self, bannercontexts):
-        self.__setsession()
-        bannerctxt = BannerContext(1,1,1,1)
+    def  saveBanners(self, bannercontexts,timezone="IST"):
+        result = -1
+        try:
+            self.__setsession()
+            statement = " Insert into bannerclickstream (platform,operationdate,adreferrer,slotname,bannerid,createddate, customerid, location,clicked) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            for item in bannercontexts:
+                banner = item
+                ctime = time.time()
+
+                if timezone == "IST":
+                    ctime += 19800  # note 19800 corresponds to 5hr30mins in seconds
+                ctime = math.ceil(ctime)
+
+                #click = 'false'
+                #if banner.getBannerID:
+                #    click = 'true'
 
 
-        for banner in bannercontexts:
-            if type(banner) == BannerContext:
-                pass
+
+                self._session.execute(query=statement,
+                                      parameters=
+                                        (banner.getPlatform,
+                                            self._getUUIDFromTime(banner.getOperationTime),
+                                            banner.getReferral,
+                                            banner.getSlot,
+                                            banner.getBannerID,
+                                            ctime,
+                                            str(banner.getCustomerID),
+                                            banner.getLocation,
+                                            banner.getBannerClicked
+                                          ))
+
+            result = 1
+        except Exception as ex:
+            print(ex)
+        finally:
+            return result
 
 
     def getBanners(self,fromdate,todate):
@@ -143,7 +174,7 @@ class BannerModel:
             banners = list()
             self.__setsession()
             if validdateasof == "":
-                validdateasof = time.time()
+                validdateasof = math.floor(time.time())
             else:
                 validdateasof = self._getEpochFromTime(validdateasof,timezone)
 

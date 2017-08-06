@@ -12,18 +12,23 @@ import numpy as np
 class TestBannerGenerator:
 
     _imagekey=list()
-    _locations = {'Bangalore': 0.2,
-                    'Mumbai':0.3,
-                  'Pune':0.4
+    _locations = {'Bangalore': 0.06,
+                    'Mumbai':0.1,
+                  'Pune':0.03
                   }
 
     _banners = list()
 
-    def _initalizecustomer(self):
+    _coldstart=False
+
+    def _initalizecustomer(self,customercount=1000):
+        '''
+
+        :return:
+        '''
         random.seed(random.randrange(2,10))
         with open('../resources/clickdata.csv', mode='w') as wfile:
             writer = csv.writer(wfile, delimiter=',')
-
             loclist = list(self._locations.keys())
             mumbai =0
             bangalore =0
@@ -34,7 +39,7 @@ class TestBannerGenerator:
             trueblr=0
             falsepun=0
             truepun=0
-            for customer in range(1,1001):
+            for customer in range(1,customercount+1):
                 location = random.choice(loclist)
                 banner = BannerContext('hero',location,
                                        random.choice(self._imagekey),
@@ -63,25 +68,40 @@ class TestBannerGenerator:
                 writer.writerow([banner.getPlatform,banner.getSlot,banner.getCustomerID,
                                  banner.getBannerID,banner.getLocation,banner.getBannerClicked,
                                  banner.getOperationTime])
+
+            #Insert the records into cassandra
+            if self._coldstart:
+                result = self._model.saveBanners(self._banners)
+
+            if result <=0 :
+                print("DB update failed!")
+            else:
+                print("DB update successful")
+
+
             print("Cust:{}, Loc:{}, Clicked:{},imagekey:{}".format(customer,location,banner.getBannerClicked,banner.getBannerID))
 
             print("Overall Mumbai:{}-{}-{}, Bangalore:{}-{}-{}, Pune:{}-{}-{}".format(mumbai,truemum,falsemum,
                                                                                           bangalore,trueblr,falseblr,
                                                                                           pune,truepun,falsepun))
 
+            print("Total clicks - {}".format(truepun+truemum+trueblr))
 
-    def generateSampleData(self):
-        #slotimages = SetSlotConfiguration()
-        #df = slotimages.returnslotimages()
-        model = BannerModel()
-        slots = model.getSlotBanners('ajio','hero',"05-Aug-17 00:00:00")
 
+    def generateSampleData(self,customercount=1000,coldstart=False):
+        '''
+        We will get the slot configuration for the given day
+        :return:
+        '''
+        self._coldstart = coldstart
+        self._model = BannerModel()
+        slots = self._model.getSlotBanners('ajio','hero',utils.currentimeInFormat())
         for slot in slots:
             self._imagekey.append(slot[4])
 
-        self._initalizecustomer()
+        self._initalizecustomer(customercount)
 
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData()
+    testbanner.generateSampleData(50000,True)

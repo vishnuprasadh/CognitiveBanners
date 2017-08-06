@@ -5,7 +5,7 @@ class BannerContext:
 
     '''
     def __init__(self,slotid,location,bannerid, operationtime, customerid="",
-                 bannerclicked=False,referral=None,platform='ajio'):
+                 bannerclicked=False,referral="",platform='ajio'):
         self._slotid = slotid
         self._location = location
         self._customerid = customerid
@@ -42,3 +42,7 @@ class BannerContext:
     @property
     def getOperationTime(self):
         return self._operationtime
+
+    @property
+    def getReferral(self):
+        return self._referral

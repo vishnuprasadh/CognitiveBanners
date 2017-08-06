@@ -6,12 +6,13 @@ CREATE TABLE bannerclickstream (
     platform text,
     operationdate timeuuid,
     adreferrer text,
+    slotname text,
     bannerid text,
     clicked boolean,
-    createddate timestamp,
+    createddate float,
     customerid text,
     location text,
-    PRIMARY KEY (platform, operationdate)
+    PRIMARY KEY ((platform, slotname), operationdate,location)
 ) WITH CLUSTERING ORDER BY (operationdate DESC);
 
 create table slotconfiguration
@@ -27,3 +28,5 @@ create table slotconfiguration
 ) with clustering order by (validto DESC)
 
 
+ Insert into bannerclickstream (platform,operationdate,adreferrer,slotname,bannerid,createddate, customerid, location,clicked)
+ values ('ajio',f6747f80-7ac7-11e7-a231-409152815c5c,'','hero','1',1502038496,'1','mumbai',True)
