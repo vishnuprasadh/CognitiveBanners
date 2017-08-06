@@ -3,8 +3,12 @@ from flask import Flask,Request,render_template,url_for,request
 from source.bannermodel import BannerModel
 from source.bannercontext import BannerContext
 import source.utils as utils
-
 from pyspark.context import SparkContext,SparkConf
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+import  pandas as pd
+import random
+import json
+
 
 app = Flask(__name__)
 #api = Api(app)
@@ -30,19 +34,74 @@ def postAds():
 @app.route('/adclick/<string:platform>/<string:slot>/<string:location>/<string:pastmin>',methods=['GET'])
 def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
     bmodel  = BannerModel()
-    rows = bmodel.getBanners(platform,slot,pastmin)
+    images = bmodel.getSlotBanners(platform, slot, utils.currentimeInFormat())
+    rowresult = bmodel.getBanners(platform,slot,pastmin)
 
-    #load the recs and send the right value through spark
-    SparkConf.setMaster= "local[2]"
-    SparkConf.setAppName ="banners"
-    sc = SparkContext.getOrCreate()
+    json_data = json.dumps({})
+
+    if rowresult:
+        #Initialize Spark context
+        SparkConf.setMaster = "local[2]"
+        SparkConf.setAppName = "banners"
+        sc = SparkContext.getOrCreate()
+        rows = rowresult.current_rows
+        rdd = sc.parallelize(rows)
+        #filter by location
+        keys = rdd.filter(lambda X: "Bangalore" in X[0])
+        #collect the filtered values to list.
+        values = keys.collect()
+        #get a dataframe
+        adclicks = pd.DataFrame(values)
+
+        adname = _normalizeandReturnAd(adclicks,images=images)
+
+        json_data = {"key": adname[1], "value": "{0}.png".format(adname[1])}
+
+    else:
+        json_data = {"key" :"", "errorcode":"401", "errordesc":"No object found!"}
+
+    return json.dumps(json_data)
 
 
+def _normalizeandReturnAd(df,images):
+    #get count of dataframe
+    samples = len(df)
+    data = df.iloc[:, [1, 2]].values
+    labelencodeImage = LabelEncoder()
+    labelencodecity = LabelEncoder()
+    data[:, 0] = labelencodeImage.fit_transform(data[:, 0])
+    #data[:, 1] = labelencodecity.fit_transform(data[:, 1])
+
+    onehotencoderimage = OneHotEncoder(categorical_features=[0])
+    data = onehotencoderimage.fit_transform(data).toarray()
 
 
+    #Initialize the images
+    adimages=[]
+    for slot in images:
+        adimages.append(slot[4])
+
+    # Depending on number of images for the slot we will initialize
+    numberofrewards_1 = [0] * len(adimages)
+    numberofrewards_0 = [0] * len(adimages)
 
 
-#api.add_resource(AdClickEvents,'/adclick/<platform>/<slot>/<location>')
+    #now based on variate analysis return the ads.
+    for sample in range(0, samples):
+        selectedad = 0
+        # this is required as we take the max random draw from each ads
+        max_random = 0
+
+        # for each ad image, calculate the randombeta
+        for ad in range(0, len(adimages)):
+            randombeta = random.betavariate(numberofrewards_1[ad] + 1,
+                                            numberofrewards_0[ad] + 1)
+            # as per the thompsonsampling, we need to take the maximum of the beta dist and set the ad which needs to showup.
+            if randombeta > max_random:
+                max_random = randombeta
+                selectedad = ad
+
+    return selectedad, adimages[selectedad]
 
 
 if __name__=='__main__':

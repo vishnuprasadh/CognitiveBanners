@@ -14,6 +14,7 @@ import datetime
 from source.bannermodel import BannerModel
 from source.bannercontext import BannerContext
 import source.utils as utils
+import pandas as pd
 
 from pyspark.context import SparkContext,SparkConf
 
@@ -58,6 +59,7 @@ _locations = {'Bangalore': 0.4,
 for i in range(0,10):
     print(random.choice (list(_locations.keys())))
 '''
+'''
 
 # load the recs and send the right value through spark
 
@@ -75,11 +77,17 @@ if rowresult:
         columns = rowresult.column_names
         rows = rowresult.current_rows
         rdd = sc.parallelize(rows)
-
-        banlist = rdd.m
+        keys = rdd.filter(lambda X: "Bangalore" in X[0])
+        values = keys.collect()
+        df = pd.DataFrame(values)
+        print(df.head())
 
     except Exception as ex:
         print(ex)
+'''
 
+import json
+json_data= {"key" : "8"}
+print(json.dumps(json_data))
 
 

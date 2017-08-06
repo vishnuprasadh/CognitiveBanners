@@ -119,7 +119,7 @@ class BannerModel:
         if timezone =="IST":
             curtime +=19800 # we need to add 530hrs for gmt
 
-        statement = "Select * from bannerclickstream where platform = %s and slotname =%s and operationdate > %s "
+        statement = "Select location,bannerid, clicked,customerid from bannerclickstream where platform = %s and slotname =%s and operationdate > %s "
         rows = self._session.execute(query=statement,
                                      parameters=(platform, slot, uuid_from_time(curtime)))
         return rows
