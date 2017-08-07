@@ -35,7 +35,7 @@ def postAds():
             if request.args.get("slot"): slot =request.args.get("slot")
             if request.args.get("location"): location = request.args.get("location")
             if request.args.get("customerid"): customerid = request.args.get("customerid")
-            if request.args.get("clicked"): clicked = bool(request.args.get("clicked"))
+            if request.args.get("clicked"): clicked = _convert_to_bool(request.args.get("clicked"))
             if request.args.get("platform"): platform = request.args.get("platform")
             if request.args.get("bannerid"): bannerid = request.args.get("bannerid")
 
@@ -62,6 +62,16 @@ def postAds():
         json_data = {"key": "200", "value":"", "errorcode": "401", "errordesc":"{}".format(ex)}
 
     return json.dumps(json_data)
+
+def _convert_to_bool(value):
+    """
+       Converts 'something' to boolean. Raises exception for invalid formats
+           Possible True  values: 1, True, "1", "TRue", "yes", "y", "t"
+           Possible False values: 0, False, None, [], {}, "", "0", "faLse", "no", "n", "f", 0.0, ...
+    """
+    if str(value).lower() in ("yes", "y", "true",  "t", "1"): return True
+    if str(value).lower() in ("no",  "n", "false", "f", "0", "0.0", "", "none", "[]", "{}"): return False
+    raise Exception('Invalid value for boolean conversion: ' + str(value))
 
 
 @app.route('/adclick/',methods=['GET'])
