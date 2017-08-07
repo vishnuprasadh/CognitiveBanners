@@ -28,7 +28,7 @@ $(document).ready(function() {
             var clickedState = true;
             var location = getCity();
 
-            document.getElementById('message').innerHTML = "Your customerID "+customerid+" for banner "+bannerid+" having clicked="+clickedState+" state with "+location+" location will be saved."
+            document.getElementById('message').innerHTML = "Your customerID "+customerid+" for banner "+bannerid+" having clicked="+clickedState+" with "+location+" location will be saved."
 
             <!--alert("CID"+customerid+" bannerid="+bannerid+" clicked="+clickedState+" location="+location);-->
 
@@ -78,20 +78,18 @@ $(document).ready(function() {
     <table width="90%" height="80%" bgcolor="#7E8F7C" >
 
         <tr>
-            <td><h3>Select city to change Banner : </h3>
-
-                 <select id="city">
+            <td><h4>Select city to change Banner :     <select id="city">
                                 <option value="mumbai">mumbai</option>
                                 <option value="pune">pune</option>
                                 <option value="bangalore">bangalore</option>
                   </select>
-
+                </h4>
             </td>
         </tr>
         <tr><td></td></tr>
         <tr>
             <td >
-                <h4><div id="message" class="btext">Click the banner to save your clicked state!</div></h4>
+                <h5><div id="message" class="btext">Click the banner to save your clicked state!</div></h5>
             </td>
         </tr>
         <tr>
