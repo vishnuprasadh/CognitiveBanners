@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <style>
+             .btext
+            {
+                font-family:    Arial, Helvetica, sans-serif
+                font-size:      60px;
+                font-weight:    bold;
+            }
+      </style>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+
+    <title>Cognitive Banners </title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+                <script lang="javascript" type="text/javascript">
+$(document).ready(function() {
+
+                                $("#paintBanner").on("click",function(){
+            var customerid= Math.ceil(Math.random()*10000) || 0000;
+            var bannerid = $(this).find("img").attr("id");
+            var clickedState = true;
+            var location = getCity();
+
+            document.getElementById('message').innerHTML = "Your customerID "+customerid+" for banner "+bannerid+" having clicked="+clickedState+" state with "+location+" location will be saved."
+
+            <!--alert("CID"+customerid+" bannerid="+bannerid+" clicked="+clickedState+" location="+location);-->
+
+                                    var url = "http://127.0.0.1:5002/adclick/?customerid="+customerid+"&bannerid="+bannerid+"&location="+location+"&clicked="+clickedState;
+                                                $.ajax({
+                                                  url: url,
+                                                  type: 'POST',
+                                                  success: function(data){
+                  console.log(data);
+              }
+                                                });
+                                });
+
+                                $("#city").on("change",function(){
+                                                getBanner();
+                                });
+        function getBanner(){
+            var cityName = getCity() || "mumbai";
+            $.ajax({
+                                                  url: 'http://127.0.0.1:5002/adclick/ajio/hero/'+cityName,
+                                                  type: 'GET',
+                                                  success: function(data){
+                  updateImage(data);
+              }
+                                                });
+        }
+                                function updateImage(data){
+                                                console.log(data);
+                                                var data = JSON.parse(data);
+                                                document.getElementById('message').innerHTML ="Click the banner to save your clicked state!"
+                                                var imgResponse = "<img id="+data.key+" src=../static/"+data.value+" />";
+                                                $("#paintBanner").html(imgResponse)
+                                }
+                                function getCity(){
+                                                return ""+$("#city option:selected").text();
+                                }
+
+        getBanner();
+                });
+                </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+
+  <body bgcolor="#DFE2DB">
+    <table width="90%" height="80%" bgcolor="#7E8F7C" >
+
+        <tr>
+            <td><h3>Select city to change Banner : </h3>
+
+                 <select id="city">
+                                <option value="mumbai">mumbai</option>
+                                <option value="pune">pune</option>
+                                <option value="bangalore">bangalore</option>
+                  </select>
+
+            </td>
+        </tr>
+        <tr><td></td></tr>
+        <tr>
+            <td >
+                <h4><div id="message" class="btext">Click the banner to save your clicked state!</div></h4>
+            </td>
+        </tr>
+        <tr>
+            <td width="100%" height="80%">
+                 <div class="container">
+                  <div id="paintBanner" width="400px" height="400px" >
+                        <img id="diesel"  src="../static/loading.gif"  />
+                  </div>
+
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+
+
+
+
+  </body>
+</html>
