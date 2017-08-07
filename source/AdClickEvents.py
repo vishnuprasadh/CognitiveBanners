@@ -1,14 +1,15 @@
-from flask import Flask,Request,render_template,url_for,request
-#from flask_restful import Resource,Api,reqparse
-from source.bannermodel import BannerModel
-from source.bannercontext import BannerContext
-import source.utils as utils
-from pyspark.context import SparkContext,SparkConf
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder
-import  pandas as pd
-import random
 import json
+import random
 
+import pandas as pd
+from flask import Flask, request
+from pyspark.context import SparkContext, SparkConf
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+
+import source.utils as utils
+from source.bannercontext import BannerContext
+# from flask_restful import Resource,Api,reqparse
+from source.bannermodel import BannerModel
 
 app = Flask(__name__)
 

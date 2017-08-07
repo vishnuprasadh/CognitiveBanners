@@ -1,10 +1,10 @@
-from matplotlib import pyplot as plt
-from source.bannermodel import BannerModel
-import source.utils as utils
-import pandas as pd
 import random
-import time
 from datetime import datetime
+
+import pandas as pd
+
+import source.utils as utils
+from source.bannermodel import BannerModel
 
 
 class BannerSuggestClassification:
@@ -37,7 +37,6 @@ class BannerSuggestClassification:
         from sklearn.preprocessing import OneHotEncoder, LabelEncoder
         dataset = pd.read_csv("../resources/clickdata.csv", sep=",", header=None)
         self._samples = len(dataset)
-        from sklearn.model_selection import train_test_split
         self.data = dataset.iloc[:, [3, 4, 5]].values
         # Y = dataset.iloc[:, 5].values
 

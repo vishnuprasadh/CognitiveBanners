@@ -1,33 +1,21 @@
 #core application modules
-from source.modelConfiguration import ModelConfiguration
-from source.bannercontext import BannerContext
+import math
+import time
 
-#needed for cassandra authorization,connection and roundrobin policy
+from cassandra.auth import PlainTextAuthProvider
+# needed for cassandra authorization,connection and roundrobin policy
 from cassandra.cluster import Cluster
 from cassandra.policies import DCAwareRoundRobinPolicy
-from cassandra.connection import Connection
-from cassandra.auth import PlainTextAuthProvider
-
-#need for generation of timeUUID and conversions
-from cassandra.util import uuid_from_time
 from cassandra.util import datetime_from_uuid1
-
-from cassandra.cqltypes import UUID
-from cassandra.cqltypes import TimestampType
-from cassandra.cqltypes import BooleanType
-
-#batch statement execution supports
-from cassandra.query import BatchStatement
-from cassandra.query import SimpleStatement
-from cassandra.query import BatchType
-from cassandra.policies import WriteType
-from cassandra import ConsistencyLevel
-from cassandra.query import Statement
-
-#Need to parse values from dataframes/pandas.
+# need for generation of timeUUID and conversions
+from cassandra.util import uuid_from_time
+# Need to parse values from dataframes/pandas.
 from pandas import DataFrame
-import time
-import math
+
+from source.modelConfiguration import ModelConfiguration
+
+
+# batch statement execution supports
 
 
 class BannerModel:
