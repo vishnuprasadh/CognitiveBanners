@@ -42,7 +42,10 @@ class TestBannerGenerator:
             trueblr=0
             falsepun=0
             truepun=0
-            for customer in range(1,customercount+1):
+            initcustomer = random.randrange(2010110,402000020)
+            customercount = initcustomer+ customercount
+
+            for customer in range(initcustomer,customercount+1):
                 location = random.choice(loclist)
                 banner = BannerContext('hero',location,
                                        random.choice(self._imagekey),

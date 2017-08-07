@@ -151,6 +151,14 @@ def _normalizeandReturnAd(df,images):
                 max_random = randombeta
                 selectedad = ad
 
+        #now boost the values of reward count if its correctly or wrongly selected so that it can influence future betavariate values
+        reward = data[sample, selectedad]
+        if reward == 1:
+            numberofrewards_1[selectedad] = numberofrewards_1[selectedad] + 1
+        else:
+            numberofrewards_0[selectedad] = numberofrewards_0[selectedad] + 1
+
+
     return selectedad, adimages[selectedad]
 
 
