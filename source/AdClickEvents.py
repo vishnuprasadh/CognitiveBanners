@@ -117,6 +117,20 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
 
         json_data = {"key": adname[1], "value": "{0}.png".format(adname[1])}
 
+        #We will also post an entry for this banner which will be clicked as false.
+        banner = BannerContext(slot,
+                               location,
+                               adname[1],
+                               utils.currentimeInFormat(),
+                               "-1",
+                               _convert_to_bool('false'),
+                               "",
+                               platform)
+        #also add an entry with assumption people may not click
+        banners=[]
+        banners.append(banner)
+        result = bmodel.saveBanners(banners)
+
     else:
         json_data = {"key" :"", "errorcode":"401", "errordesc":"No object found!"}
 

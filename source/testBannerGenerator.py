@@ -112,7 +112,7 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(100000,False)
+    testbanner.generateSampleData(10000,False)
 
     '''
     #use this to generate click events over a timeline
