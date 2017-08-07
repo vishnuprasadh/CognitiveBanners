@@ -1,6 +1,6 @@
 import pandas as pd
 from pandas import DataFrame
-from source.bannermodel import BannerModel
+from CognitiveBanners.bannermodel import BannerModel
 import os
 
 class SetSlotConfiguration:

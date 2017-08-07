@@ -1,7 +1,7 @@
 from kafka_rest.client import KafkaRESTClient
 
-import source.utils as utils
-from source.bannercontext import BannerContext
+import CognitiveBanners.utils as utils
+from CognitiveBanners.bannercontext import BannerContext
 
 
 class AsyncPostAdClick:

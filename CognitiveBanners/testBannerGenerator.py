@@ -1,8 +1,8 @@
 import random
-from source.setslotconfiguration import SetSlotConfiguration
-from source.bannercontext import BannerContext
-from source.bannermodel import BannerModel
-import source.utils as utils
+from CognitiveBanners.setslotconfiguration import SetSlotConfiguration
+from CognitiveBanners.bannercontext import BannerContext
+from CognitiveBanners.bannermodel import BannerModel
+import CognitiveBanners.utils as utils
 import datetime
 import csv
 import time
@@ -112,7 +112,7 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(10000,False)
+    testbanner.generateSampleData(10000,True)
 
     '''
     #use this to generate click events over a timeline

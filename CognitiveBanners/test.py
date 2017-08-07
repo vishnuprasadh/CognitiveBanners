@@ -11,12 +11,13 @@ from cassandra.auth import PlainTextAuthProvider
 import time
 import datetime
 
-from source.bannermodel import BannerModel
-from source.bannercontext import BannerContext
-import source.utils as utils
+from CognitiveBanners.bannermodel import BannerModel
+from CognitiveBanners.bannercontext import BannerContext
+import CognitiveBanners.utils as utils
 import pandas as pd
 
 from pyspark.context import SparkContext,SparkConf
+
 
 '''
 b = BooleanType

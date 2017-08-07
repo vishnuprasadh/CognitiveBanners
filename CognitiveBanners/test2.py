@@ -5,7 +5,7 @@ Created on Sun Aug  6 13:02:50 2017
 
 @author: vishnuhari
 """
-
+import pandas as pd
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 dataset = pd.read_csv("../resources/clickdata.csv", sep=",", header=None)
 

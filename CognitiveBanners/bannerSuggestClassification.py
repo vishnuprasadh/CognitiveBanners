@@ -3,8 +3,8 @@ from datetime import datetime
 
 import pandas as pd
 
-import source.utils as utils
-from source.bannermodel import BannerModel
+import CognitiveBanners.utils as utils
+from CognitiveBanners.bannermodel import BannerModel
 
 
 class BannerSuggestClassification:

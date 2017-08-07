@@ -1,17 +1,26 @@
 import json
 import random
+from datetime import datetime
+import time
 
 import pandas as pd
-from flask import Flask, request
+from flask import Flask, request,render_template
 from pyspark.context import SparkContext, SparkConf
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
-import source.utils as utils
-from source.bannercontext import BannerContext
+#import CognitiveBanners.utils as utils
+from CognitiveBanners.bannercontext import BannerContext
 # from flask_restful import Resource,Api,reqparse
-from source.bannermodel import BannerModel
+from CognitiveBanners.bannermodel import BannerModel
+
+
 
 app = Flask(__name__)
+
+@app.route('/home/',methods=['GET'])
+def renderhome():
+    return render_template('banner.html')
+
 
 @app.route('/adclick/',methods=['POST'])
 def postAds():
@@ -46,7 +55,7 @@ def postAds():
                 banner = BannerContext(slot.lower(),
                                        location.lower(),
                                        bannerid.lower(),
-                                       utils.currentimeInFormat(),
+                                       currentimeInFormat(),
                                        customerid,
                                        clicked,
                                        referral.lower(),
@@ -54,13 +63,13 @@ def postAds():
                 banners.append(banner)
                 bmodel = BannerModel()
                 result = bmodel.saveBanners(banners)
-                json_data = {"key": "200", "value": "Record updated successfully"}
+                json_data = [{"key": "200", "value": "Record updated successfully"}]
 
         if json_data == "":
-            json_data = {"key": "200", "value": "No Record to update"}
+            json_data = [{"key": "200", "value": "No Record to update"}]
     except Exception as ex:
         print(ex)
-        json_data = {"key": "200", "value":"", "errorcode": "401", "errordesc":"{}".format(ex)}
+        json_data = [{"key": "200", "value":"", "errorcode": "401", "errordesc":"{}".format(ex)}]
 
     return json.dumps(json_data)
 
@@ -73,6 +82,11 @@ def _convert_to_bool(value):
     if str(value).lower() in ("yes", "y", "true",  "t", "1"): return True
     if str(value).lower() in ("no",  "n", "false", "f", "0", "0.0", "", "none", "[]", "{}"): return False
     raise Exception('Invalid value for boolean conversion: ' + str(value))
+
+def currentimeInFormat(format="%d-%b-%y %H:%M:%S"):
+    nowtime = datetime.now().timetuple()
+    ftime = time.strftime(format,nowtime)
+    return ftime
 
 
 @app.route('/adclick/',methods=['GET'])
@@ -91,7 +105,7 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
      In case of error the errorcode and description is returned.
     '''
     bmodel  = BannerModel()
-    images = bmodel.getSlotBanners(platform, slot, utils.currentimeInFormat())
+    images = bmodel.getSlotBanners(platform, slot, currentimeInFormat())
     rowresult = bmodel.getBanners(platform,slot,pastmin)
 
     json_data = json.dumps({})
@@ -122,7 +136,7 @@ def getAds(platform='ajio',slot='hero',location='bangalore',pastmin=720):
         banner = BannerContext(slot,
                                location,
                                adname[1],
-                               utils.currentimeInFormat(),
+                               currentimeInFormat(),
                                "-1",
                                _convert_to_bool('false'),
                                "",
@@ -175,9 +189,13 @@ def _normalizeandReturnAd(df,images):
             if randombeta > max_random:
                 max_random = randombeta
                 selectedad = ad
+        try:
+            #now boost the values of reward count if its correctly or wrongly selected so that it can influence future betavariate values
+            reward = data[sample, selectedad]
+        except IndexError as ex:
+            print(ex)
+            reward=0
 
-        #now boost the values of reward count if its correctly or wrongly selected so that it can influence future betavariate values
-        reward = data[sample, selectedad]
         if reward == 1:
             numberofrewards_1[selectedad] = numberofrewards_1[selectedad] + 1
         else:
@@ -188,4 +206,4 @@ def _normalizeandReturnAd(df,images):
 
 
 if __name__=='__main__':
-    app.run(host="127.0.0.1", port=int(5002),debug=True)
+    app.run(host="127.0.0.1",port=int(5002),debug=True)
