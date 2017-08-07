@@ -1,21 +1,18 @@
+from pylint.__pkginfo__ import install_requires
 from setuptools import setup
 import os
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
-
+#packages = ["CognitiveBanners.bannercontext", "CognitiveBanners.bannermodel", "CognitiveBanners.utils", "CognitiveBanners.moduleConfiguration",
+#            "CognitiveBanners.setslotconfiguration", "CognitiveBanners.bannerSuggestClassification", "CognitiveBanners.testBannerGenerator"],
 
 setup(name="CognitiveBanners",
-      packages=['source.bannercontext','source.bannermodel','source.utils','source.moduleConfiguration',
-          'source.setslotconfiguration','source.bannerSuggestClassification','source.testBannerGenerator'],
+      packages=["CognitiveBanners"],
       description="A Reinforcement learning based application used for banners/ads strategy",
-      requires=['numpy','pandas','scikit-learn','flask','pyspark',
-                'configparser','cassandra-driver','jsonify','matplotlib','kafka','kafka-rest'],
+      install_requires=["numpy","pandas","scikit-learn","flask","pyspark","requests",
+                "configparser","cassandra-driver","jsonify","matplotlib","kafka","kafka-rest"],
       include_package_data=True,
-      author='Vishnu Prasad Hari',
+      author="Vishnu Prasad Hari",
       author_email="",
-      license="BSD",
-      long_description=read('Readme.cmd'),
-      keywords='Cognitivebanners,adclick,adbanners,reinforcementlearning,thompson,thompsonsampling'
+      license="BSD"
       )
 
