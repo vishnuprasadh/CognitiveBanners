@@ -52,6 +52,7 @@ class BannerSuggestClassification:
 
     def classify(self):
         #We will iterate through each of the samples.
+        self._totalrewards =0
         for sample in range(0,self._samples):
 
             self._selectedad = 0
@@ -86,9 +87,9 @@ class BannerSuggestClassification:
             tsuccess += self._numberofrewards_1[index]
             tfail+=self._numberofrewards_0[index]
 
-        print("Total of {} records, {} success, {} fails.".format(self._samples,
-                                                                    tsuccess,
-                                                                      tfail))
+        #print("Total of {} records, {} success, {} fails.".format(self._samples,
+        #                                                             tsuccess,
+        #                                                             tfail))
 
 
 

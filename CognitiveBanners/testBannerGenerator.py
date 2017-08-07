@@ -15,8 +15,8 @@ class TestBannerGenerator:
     Once we have actual data this coldstart strategy wont be needed.
     '''
     _imagekey=list()
-    _locations = {'bangalore': 0.03,
-                    'mumbai':0.06,
+    _locations = {'bangalore': 0.3,
+                    'mumbai':0.6,
                   'pune':0.1
                   }
 
@@ -112,7 +112,7 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(10000,True)
+    testbanner.generateSampleData(10000,False)
 
     '''
     #use this to generate click events over a timeline
