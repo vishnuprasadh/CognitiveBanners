@@ -143,6 +143,9 @@ flask run -p 5002
 Note: In case you want to run of any other port, make corresponding changes to the banner.html file where we have used port with 127.0.0.1 IP i.e. loopback IP.
 
 
+9. Model tuning
+
+I have bannerSuggestClassification.py being used for model tuning purpose. All tests and modeltuning, assessment of the logic in the actual codebase of AdClickEvents.py is done through this. One of the good approach will be tune this data on your live environment and rollout these changes to AdClickEvents.py
 
 
 
