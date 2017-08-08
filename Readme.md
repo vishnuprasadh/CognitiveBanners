@@ -117,7 +117,7 @@ spark --version
 ```
 
 
-<b>. Running the Application</b>
+<b>Running the Application</b>
 
 1. Once the above setup is taken care, you are now ready to setup some base data. Download your repo and unzip into any folder.
 Run following command to setup the basic data of the slots in cassandra. 
@@ -144,7 +144,7 @@ flask run -p 5002
 Note: In case you want to run of any other port, make corresponding changes to the banner.html file where we have used port with 127.0.0.1 IP i.e. loopback IP.
 
 
-9. Model tuning
+<b>Model tuning</b>
 
 I have bannerSuggestClassification.py being used for model tuning purpose. All tests and modeltuning, assessment of the logic in the actual codebase of AdClickEvents.py is done through this. One of the good approach will be tune this data on your live environment and rollout these changes to AdClickEvents.py
 
