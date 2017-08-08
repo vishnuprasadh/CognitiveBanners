@@ -74,7 +74,15 @@ Note: I prefer using https://www.continuum.io/downloads which is anaconda distri
 
 4. Kafka - At the moment the entire implementation is not yet done but download and have the kafka from https://kafka.apache.org/ ready for future compatibility. This would in turn be using Kafka REST & AVRO binary serializer for all topic messaging.
 
+NOTE: Just to ease out the pain add the above bin paths to your $PATH file if you are on mac i.e. in your ~/.bash_profile. In case of windows, i guess you would need it in your env_path ??(Check it as i couldnt test on windows)
+
 5. PIP Installs
+
+You can run the following command from the root folder of the application
+```
+python setup.py install
+```
+If above yields in any errors, backup option is to run the following
 
 ```
 pip install cassandra-driver
@@ -91,6 +99,48 @@ pip install kafka_Rest
 pip install configparser
 ```
 
+6. Setup Cassandra
+
+Under resources folder you have model.cql which has the schema to setup the images and the table to capture banner click stream and render data. 
+
+Run the following command from the bin folder of cassandra and setup yaml configuration under conf to appropriate number of nodes as required before you start.
+
+```
+cassandra
+```
+
+7. Spark setup
+
+Just run the following command to check if pyspark is properly working. You should get a response of version installed without errors.
+```
+spark --version
+```
+
+8. Running the Application
+
+1. Once the above setup is taken care, you are now ready to setup some base data. Download your repo and unzip into any folder.
+Run following command to setup the basic data of the slots in cassandra. 
+```
+python setslotconfiguration.py
+
+```
+if you run into issues you can manually copy into spyder or other tools and execute.
+
+2. Run the following command to simulate or enter some data for our coldstart strategy. This should setup data. Check for the code under main method and you can update millions of records as required.
+
+```
+python testBannerGenerator.py
+```
+
+3. You are now ready to rumble with Thompson sampling technique! Go to the "CognitiveBanners" folder where we got all our *.py files.
+Execute the following:
+```
+export FLASK_APP=AdClickEvents.py
+export FLASK_DEBUG=true
+flask run -p 5002
+
+```
+Note: In case you want to run of any other port, make corresponding changes to the banner.html file where we have used port with 127.0.0.1 IP i.e. loopback IP.
 
 
 
