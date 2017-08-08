@@ -24,3 +24,15 @@
 *.pyc
 
 *.pyc
+
+*.log
+
+*.lck
+
+*.ctrl
+
+*.dat
+
+*.txt
+
+*.properties
