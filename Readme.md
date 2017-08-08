@@ -116,7 +116,8 @@ Just run the following command to check if pyspark is properly working. You shou
 spark --version
 ```
 
-8. Running the Application
+
+<b>. Running the Application</b>
 
 1. Once the above setup is taken care, you are now ready to setup some base data. Download your repo and unzip into any folder.
 Run following command to setup the basic data of the slots in cassandra. 
