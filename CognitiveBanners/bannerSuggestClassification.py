@@ -38,7 +38,7 @@ class BannerSuggestClassification:
         dataset = pd.read_csv("../resources/clickdata.csv", sep=",", header=None)
         self._samples = len(dataset)
         self.data = dataset.iloc[:, [3, 4, 5]].values
-        # Y = dataset.iloc[:, 5].values
+        self.clickdata = dataset.iloc[:, 5].values
 
         labelencodeImage = LabelEncoder()
         labelencodecity = LabelEncoder()
@@ -51,6 +51,7 @@ class BannerSuggestClassification:
         #self.data = self.data[:, 1:]
 
     def classify(self):
+        #try:
         #We will iterate through each of the samples.
         self._totalrewards =0
         for sample in range(0,self._samples):
@@ -70,7 +71,9 @@ class BannerSuggestClassification:
 
             self._adsselected.append(self._selectedad)
 
-            self._reward = self.data[sample,self._selectedad]
+
+            self._reward = int (int(self.data[sample,self._selectedad])==1 and self.clickdata[sample])
+
 
             if self._reward == 1:
                 self._numberofrewards_1[self._selectedad] = self._numberofrewards_1[self._selectedad] + 1
@@ -86,12 +89,6 @@ class BannerSuggestClassification:
         for index in range(0,9):
             tsuccess += self._numberofrewards_1[index]
             tfail+=self._numberofrewards_0[index]
-
-        #print("Total of {} records, {} success, {} fails.".format(self._samples,
-        #                                                             tsuccess,
-        #                                                             tfail))
-
-
 
 
 if __name__=='__main__':

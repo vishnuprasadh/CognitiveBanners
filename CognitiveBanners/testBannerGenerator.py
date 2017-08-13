@@ -15,9 +15,9 @@ class TestBannerGenerator:
     Once we have actual data this coldstart strategy wont be needed.
     '''
     _imagekey=list()
-    _locations = {'bangalore': 0.06,
-                    'mumbai':0.02,
-                  'pune':0.08
+    _locations = {'bangalore': 0.1,
+                    'mumbai':0.05,
+                  'pune':0.07
                   }
 
     _banners = list()
@@ -29,7 +29,7 @@ class TestBannerGenerator:
 
         :return:
         '''
-        random.seed(random.randrange(2,10))
+        #random.seed(random.randrange(2,10))
         with open('../resources/clickdata.csv', mode='w') as wfile:
             writer = csv.writer(wfile, delimiter=',')
             loclist = list(self._locations.keys())
@@ -112,11 +112,11 @@ class TestBannerGenerator:
 
 if __name__ == '__main__':
     testbanner = TestBannerGenerator()
-    testbanner.generateSampleData(300000,True)
 
-    '''
+    testbanner.generateSampleData(10000,True)
+
     #use this to generate click events over a timeline
-    for recs in range(1,3000):
+    '''for recs in range(1,3000):
         print("started at {}".format(datetime.datetime.now()))
         testbanner.generateSampleData(20,True)
         print("Slept at {}".format(datetime.datetime.now()))
