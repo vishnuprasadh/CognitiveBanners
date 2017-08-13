@@ -72,8 +72,8 @@ class BannerSuggestClassification:
             self._adsselected.append(self._selectedad)
 
 
-            self._reward = int (int(self.data[sample,self._selectedad])==1 and self.clickdata[sample])
-
+            #self._reward = int (int(self.data[sample,self._selectedad])==1 and self.clickdata[sample])
+            self._reward = int(self.data[sample, self._selectedad])
 
             if self._reward == 1:
                 self._numberofrewards_1[self._selectedad] = self._numberofrewards_1[self._selectedad] + 1
