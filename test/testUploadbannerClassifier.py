@@ -2,6 +2,7 @@ import random
 from datetime import datetime
 import pandas as pd
 import time
+import numpy as np
 
 
 validasof= time.time()
@@ -28,7 +29,7 @@ this function will normalize this.
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 dataset = pd.read_csv("clickdata.csv", sep=",", header=None)
 
-random.seed(random.randrange(100,200))
+#random.seed(random.randrange(100,200))
 samples = len(dataset)
 data = dataset.iloc[:, [0,2]].values
 
@@ -67,11 +68,13 @@ for sample in range(0,samples):
 
     # review if the bannerselected in dataset and click= true
     reward = (data[sample,selectedad]==1 and data[sample,10])
-    print("Selectedad:{0}-Excelad:{1}-clicked:{2}-reward{3}".format(
+    
+    
+    print("Selectedad:{0}-Excelad:{1}-clicked:{2}-reward:{3}".format(
             selectedad,
-            data[sample,selectedad],
+            int(np.argwhere(data[sample]==1)[0]),
             data[sample,10],
-            reward
+            bool(reward)
             ))
     if reward == 1:
         numberofrewards_1[selectedad] = numberofrewards_1[selectedad] + 1
